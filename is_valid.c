@@ -6,7 +6,7 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/25 16:53:26 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/06 17:28:42 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:59:30 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,23 @@ long	ft_atol(char *s)
 	long	res;
 	int		sign;
 	int		i;
+	int		j;
 
 	res = 0;
 	sign = 1;
 	i = 0;
-	if (s[i] == '-' || s[i] == '+')
-	{
-		if (s[i] == '-')
-			sign = -1;
-		i++;
-	}
 	while (s[i])
 	{
-		if (s[i] < '0' || '9' < s[i])
-			break ;
-		res = res * 10 + s[i] - '0';
+		if (s[i] == '-')
+			sign = -sign;
+		j = 0;
+		while ('0' <= s[i + j] && s[i + j] <= '9')
+		{
+			res = res * 10 + s[i + j] - '0';
+			j++;
+			if (!('0' <= s[i + j] && s[i + j] <= '9'))
+				return (res * sign);
+		}
 		i++;
 	}
 	return (res * sign);
@@ -64,7 +66,7 @@ int	is_signed_digit(char *s)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] < '0' || '9' < s[i])
+		if (!('0' <= s[i] && s[i] <= '9'))
 			return (0);
 		++i;
 	}

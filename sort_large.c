@@ -6,7 +6,7 @@
 /*   By: kasakamo <kasakamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 17:42:58 by kasakamo          #+#    #+#             */
-/*   Updated: 2025/07/13 20:12:19 by kasakamo         ###   ########.fr       */
+/*   Updated: 2025/08/13 16:11:59 by kasakamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	find_max_index(t_stack *b)
 	i = 0;
 	while (cur)
 	{
-		if (cur->value > max)
+		if (cur->index > max)
 		{
-			max = cur->value;
+			max = cur->index;
 			idx = i;
 		}
 		cur = cur->next;
@@ -78,7 +78,13 @@ void	sort_large(t_stack **a, t_stack **b)
 	{
 		if ((*a)->top->index >= chunk && (*a)->top->index < chunk + chunk_size)
 		{
-			op_pb(a, b);
+			if ((*a)->top->index < chunk + chunk_size / 2)
+				op_pb(a, b);
+			else
+			{
+				op_pb(a, b);
+				op_rb(*b, 1);
+			}
 			pushed++;
 		}
 		else
